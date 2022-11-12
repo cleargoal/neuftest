@@ -1,6 +1,6 @@
 <?php
 // we will count sum here
-class ClassOne
+class PlusOperation
 {
     function __construct($file)
     {
@@ -56,4 +56,3 @@ class ClassOne
         fclose($fp);
     }
 }
-?>

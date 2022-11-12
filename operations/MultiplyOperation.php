@@ -1,6 +1,11 @@
 <?php
-// here we will make multiplication
-class Classthree {
+namespace operations;
+
+/**
+ * here we will make multiplication
+ */
+class MultiplyOperation
+{
 
     private $file = null;
     private $resultHandler;
@@ -9,7 +14,8 @@ class Classthree {
     private const RESULT_FILE = "result.csv";
 
     /**
-     * Classthree constructor.
+     * MultiplyOperation constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -96,7 +102,6 @@ class Classthree {
         $value1 = $this->prepareNumber($line[0]);
         $value2 = $this->prepareNumber($line[1]);
         return [$value1, $value2];
-
     }
 
     /**
@@ -131,7 +136,7 @@ class Classthree {
 
 
     /**
-     * check and delete main files before execution
+     * check and delete main operations before execution
      */
     private function prepareFiles() : void
     {
@@ -240,4 +245,3 @@ class Classthree {
         fclose($this->resultHandler);
     }
 }
-?>

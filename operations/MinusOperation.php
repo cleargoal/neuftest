@@ -1,17 +1,23 @@
 <?php
-// here we will make division
-class classFour{
+//here we will get minus
+class MinusOperation
+{
+    private $file;
+    private $action;
 
-    public function __construct($file)
+    public function __construct($file, $action = "minus")
     {
-        if(file_exists("log.txt")) {
-            unlink("log.txt");
-        }
+        $this->file = $file;
+        $this->action = $action;
+    }
 
+    public function start()
+    {
         $fp = fopen("log.txt", "w+");
-        fwrite($fp, "Started division operation \r\n");
+        fwrite($fp, "Started minus operation \r\n");
 
-        $data = fopen($file, "r");
+        $data = fopen($this->file, "r");
+        if(!$data) throw new \Exception("File cannot be openned");
 
         if(file_exists("result.csv")) {
             unlink("result.csv");
@@ -21,11 +27,7 @@ class classFour{
             $line = explode(";", $line);
             $line[0] = intval($line[0]);
             $line[1] = intval($line[1]);
-            if($line[1] === 0) {
-                fwrite($fp, "numbers ".$line[0] . " and ". $line[1]." are wrong \r\n");
-                continue;
-            }
-            $result = $line[0] / $line[1];
+            $result = $line[0] - $line[1];
             if($result < 0) {
                 fwrite($fp, "numbers ".$line[0] . " and ". $line[1]." are wrong \r\n");
             } else {
@@ -36,7 +38,7 @@ class classFour{
             }
         }
 
-        fwrite($fp, "Finished division operation \r\n");
+        fwrite($fp, "Finished minus operation \r\n");
         fclose($fp);
         fclose($data);
     }

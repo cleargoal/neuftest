@@ -1,46 +1,25 @@
 <?php
+include_once 'app/OperationsManager.php';
+include_once 'app/ValidatingResources.php';
+include_once 'app/Messaging.php';
+include_once 'operations/BasicOperation.php';
 
-$shortopts = "a:f:";
-$longopts  = array(
+use app\ValidatingResources;
+use app\Messaging;
+use app\OperationsManager;
+use operations\BasicOperation;
+
+$shortOpts = "a:f:";
+$longOpts  = array(
     "action:",
     "file:",
 );
 
-$options = getopt($shortopts, $longopts);
+$options = getopt($shortOpts, $longOpts);
 
-if(isset($options['a'])) {
-    $action = $options['a'];
-} elseif(isset($options['action'])) {
-    $action = $options['action'];
-} else {
-    $action = "xyz";
-}
-
-if(isset($options['f'])) {
-    $file = $options['f'];
-} elseif(isset($options['file'])) {
-    $file = $options['file'];
-} else {
-    $file = "notexists.csv";
-}
-
-try {
-    if ($action == "plus") {
-        include 'files/ClassOne.php';
-        $classOne = new ClassOne($file);
-    } elseif ($action == "minus") {
-        include 'files/ClassTwo.php';
-        $classTwo = new ClassTwo($file, "minus");
-        $classTwo->start();
-    } elseif ($action == "multiply") {
-        include 'files/Classthree.php';
-        $classThree = new Classthree();
-        $classThree->setFile($file);
-        $classThree->execute();
-    } elseif ($action == "division") {
-        include 'files/classFour.php';
-        $classFouyr = new classFour($file);
-    } else {
-        throw new \Exception("Wrong action is selected");
-    }
-} catch (\Exception $exception) {}
+$operaMng = new OperationsManager(
+    new ValidatingResources(new Messaging()),
+    new BasicOperation(new Messaging()),
+    new Messaging()
+);
+$operaMng->execute($options);
