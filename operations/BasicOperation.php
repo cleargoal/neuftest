@@ -37,7 +37,7 @@ class BasicOperation
 
         foreach ($srcArray as $key => $value) {
             $rowResult = $this->oneRowOperation($value);
-            if ($rowResult['valR'] > 0) {
+            if (is_numeric($rowResult['valR']) && $rowResult['valR'] > 0) {
                 $goodResult[] = $rowResult;
             }
             else {
